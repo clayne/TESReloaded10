@@ -261,3 +261,10 @@ void __fastcall MuzzleLightCullingFix(MuzzleFlash* This) {
 	}
 	ThisCall(0x9BB8A0, This);
 }
+
+BSCullingProcess* __fastcall BSCullingProcessCreateHook(BSCullingProcess* apThis, void*, void* apVisibleSet) {
+
+	ThisCall(0x4A0EB0, apThis, apVisibleSet);
+	apThis->kCullMode = 1; // ALLPASS 
+	return apThis;
+}

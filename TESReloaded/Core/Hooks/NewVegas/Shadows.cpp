@@ -4,8 +4,7 @@ __declspec(naked) void RenderShadowMapHook() {
 
 	__asm {
 		pushad
-		mov		ecx, TheShadowManager
-		call	ShadowManager::RenderShadowMaps
+		call	ShadowManager::FixedFunctionLighting
 		popad
 		jmp		Jumpers::Shadows::RenderShadowMapReturn
 	}

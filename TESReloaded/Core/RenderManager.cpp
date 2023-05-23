@@ -224,8 +224,8 @@ void RenderManager::Initialize() {
 	RESZ = D3D->CheckDeviceFormat(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, currentDisplayMode.Format, D3DUSAGE_RENDERTARGET, D3DRTYPE_SURFACE, (D3DFORMAT)MAKEFOURCC('R','E','S','Z')) == D3D_OK;
 	if (RESZ)
 		Logger::Log("AMD/Intel detected: RESZ supported.");
-	else if (NvAPI_Initialize() == NVAPI_OK)
-		Logger::Log("NVIDIA detected: NVAPI supported.");
+	//else if (NvAPI_Initialize() == NVAPI_OK)
+	//	Logger::Log("NVIDIA detected: NVAPI supported.");
 	else
 		Logger::Log("ERROR: Cannot initialize the render manager. Graphics device not supported.");
 	if (TheSettingManager->SettingsMain.Main.AnisotropicFilter >= 2) device->SetSamplerState(0, D3DSAMP_MAXANISOTROPY, TheSettingManager->SettingsMain.Main.AnisotropicFilter);
@@ -233,7 +233,7 @@ void RenderManager::Initialize() {
 }
 
 void RenderManager::ResolveDepthBuffer() {
-
+	/*
 	if (RESZ) {
 		IDirect3DBaseTexture9 *pCurrTX = NULL;
 		IDirect3DVertexShader9 *pCurrVS = NULL;
@@ -304,7 +304,7 @@ void RenderManager::ResolveDepthBuffer() {
         else 
             NvAPI_D3D9_StretchRectEx(device, TheTextureManager->DepthSurface, NULL, TheTextureManager->DepthTexture, NULL, D3DTEXF_NONE);
 	}
-
+	//*/
 }
 
 void RenderManager::CheckAndTakeScreenShot(IDirect3DSurface9* RenderTarget){

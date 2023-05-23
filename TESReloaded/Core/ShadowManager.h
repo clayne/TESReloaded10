@@ -39,6 +39,7 @@ public:
 	D3DXMATRIX				GetCascadeViewProj(ShadowMapTypeEnum ShadowMapType, SettingsShadowStruct::ExteriorsStruct* ShadowsExteriors, D3DXMATRIX View);
 	static void				GetCascadeDepths();
 	static float			lerp(float a, float b, float t);
+	static void				FixedFunctionLighting();
 
     ShaderRecordVertex*		ShadowMapVertex;
 	ShaderRecordPixel*		ShadowMapPixel;

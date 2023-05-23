@@ -1199,3 +1199,7 @@ void SettingManager::FillFromString(const char* String, const char* Delimiter, T
 	}
 
 }
+
+int SettingManager::LightRangeMode = 0;
+bool SettingManager::DisableCulling = true;
+bool SettingManager::SunLight = true;

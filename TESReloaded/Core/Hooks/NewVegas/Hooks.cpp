@@ -6,16 +6,21 @@ void AttachHooks() {
 
 	DetourTransactionBegin();
 	DetourUpdateThread(GetCurrentThread());
+	/*
 	DetourAttach(&(PVOID&)ReadSetting,					&ReadSettingHook);
 	DetourAttach(&(PVOID&)WriteSetting,					&WriteSettingHook);
 	DetourAttach(&(PVOID&)LoadGame,						&LoadGameHook);
 	DetourAttach(&(PVOID&)NewMain,						&NewMainHook);
+	//*/
 	DetourAttach(&(PVOID&)InitializeRenderer,			&InitializeRendererHook);
 	DetourAttach(&(PVOID&)NewTES,						&NewTESHook);
+	/*
 	DetourAttach(&(PVOID&)NewPlayerCharacter,			&NewPlayerCharacterHook);
 	DetourAttach(&(PVOID&)NewSceneGraph,				&NewSceneGraphHook);
 	DetourAttach(&(PVOID&)NewMainDataHandler,			&NewMainDataHandlerHook);
+	//*/
 	DetourAttach(&(PVOID&)NewMenuInterfaceManager,		&NewMenuInterfaceManagerHook);
+	/*
 	DetourAttach(&(PVOID&)NewQueuedModelLoader,			&NewQueuedModelLoaderHook);
 	DetourAttach(&(PVOID&)CreateVertexShader,			&CreateVertexShaderHook);
 	DetourAttach(&(PVOID&)CreatePixelShader,			&CreatePixelShaderHook);
@@ -36,6 +41,7 @@ void AttachHooks() {
 	DetourAttach(&(PVOID&)ShowDetectorWindow,			&ShowDetectorWindowHook);
 	DetourAttach(&(PVOID&)LoadForm,						&LoadFormHook);
 	if (SettingsMain->FlyCam.Enabled) DetourAttach(&(PVOID&)UpdateFlyCam, &UpdateFlyCamHook);
+	//*/
 	DetourTransactionCommit();
 	
 	
@@ -50,6 +56,7 @@ void AttachHooks() {
 	SafeWrite8(0x008751C0, 0);				// Stops to clear the depth buffer when rendering the 1st person node
 	SafeWrite16(0x0086A170, 0x9090);		// Avoids to pause the game when ALT-TAB
 
+	/*
 	SafeWriteJump(Jumpers::DetectorWindow::CreateTreeViewHook,	(UInt32)DetectorWindowCreateTreeViewHook);
 	SafeWriteJump(Jumpers::DetectorWindow::DumpAttributesHook,	(UInt32)DetectorWindowDumpAttributesHook);
 	SafeWriteJump(Jumpers::DetectorWindow::ConsoleCommandHook,	(UInt32)DetectorWindowConsoleCommandHook);
@@ -57,12 +64,15 @@ void AttachHooks() {
 	SafeWriteJump(Jumpers::RenderInterface::Hook,				(UInt32)RenderInterfaceHook);
 	SafeWriteJump(Jumpers::SetRegionEditorName::Hook,			(UInt32)SetRegionEditorNameHook);
 	SafeWriteJump(Jumpers::SetWeatherEditorName::Hook,			(UInt32)SetWeatherEditorNameHook);
+	//*/
 	SafeWriteJump(Jumpers::Shadows::RenderShadowMapHook,		(UInt32)RenderShadowMapHook);
 //	SafeWriteJump(Jumpers::Shadows::RenderShadowMap1Hook,		(UInt32)RenderShadowMap1Hook);
+	/*
 	SafeWriteJump(Jumpers::Shadows::AddCastShadowFlagHook,		(UInt32)AddCastShadowFlagHook);
 	SafeWriteJump(Jumpers::Shadows::LeavesNodeNameHook,			(UInt32)LeavesNodeNameHook);
 	SafeWriteCall(Jumpers::MainMenuMusic::Fix1,					(UInt32)MainMenuMusicFix);
 	SafeWriteCall(Jumpers::MainMenuMusic::Fix2,					(UInt32)MainMenuMusicFix);
+	//*/
 
 	SafeWriteJump(0x004E4C3B, 0x004E4C42); // Fixes reflections when cell water height is not like worldspace water height
 	SafeWriteJump(0x004E4DA4, 0x004E4DAC); // Fixes reflections on the distant water
@@ -70,6 +80,7 @@ void AttachHooks() {
 	SafeWriteCall(0x00875B9D, 0x00710AB0); // Sets the world fov at the end of 1st person rendering
 	SafeWriteJump(0x00C03F49, 0x00C03F5A); // Fixes wrong rendering for image space effects
 
+	/*
 	SafeWriteCall(0x9BB158, (UInt32)MuzzleLightCullingFix);
 	
 	if (SettingsMain->Main.ForceReflections) {
@@ -91,5 +102,10 @@ void AttachHooks() {
 		SafeWriteJump(Jumpers::FlyCam::UpdateRightFlyCamHook, (UInt32)UpdateRightFlyCamHook);
 		SafeWriteJump(Jumpers::FlyCam::UpdateLeftFlyCamHook, (UInt32)UpdateLeftFlyCamHook);
 	}
+	//*/
 
+	if (SettingManager::DisableCulling)
+	{
+		SafeWriteCall(0xC51887, (UInt32)BSCullingProcessCreateHook);
+	}
 }

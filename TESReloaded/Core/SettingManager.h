@@ -455,4 +455,9 @@ public:
 	SettingsColoringMap				SettingsColoring;
 	SettingsWeatherMap				SettingsWeather;
 	SettingsSpecularStruct			SettingsSpecular;
+
+	// Shit settings
+	static int		LightRangeMode;
+	static bool		DisableCulling;
+	static bool		SunLight;
 };
