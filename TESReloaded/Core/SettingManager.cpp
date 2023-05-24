@@ -1,3 +1,7 @@
+#include <strsafe.h>
+
+static wchar_t buffer[32];
+
 static bool GetPrivateProfileBoolW(LPCWSTR lpAppName, LPCWSTR lpKeyName, BOOLEAN bDefault, LPCWSTR lpFileName) {
 	wchar_t boolStr[6];
 	DWORD strlen = GetPrivateProfileStringW(lpAppName, lpKeyName, bDefault ? L"True" : L"False", boolStr, _countof(boolStr), lpFileName);
@@ -5,6 +9,15 @@ static bool GetPrivateProfileBoolW(LPCWSTR lpAppName, LPCWSTR lpKeyName, BOOLEAN
 }
 
 #define WritePrivateProfileBoolW(lpAppName, lpKeyName, bValue, lpFileName) WritePrivateProfileStringW((lpAppName), (lpKeyName), (bValue) ? L"True" : L"False", (lpFileName))
+
+#define GetSettingInt(keyName) do { SettingManager::keyName = GetPrivateProfileIntW(L"NewVegasRTXLight", L#keyName, SettingManager::keyName, iniPath); } while (0)
+#define GetSettingBool(keyName) do { SettingManager::keyName = GetPrivateProfileBoolW(L"NewVegasRTXLight", L#keyName, SettingManager::keyName, iniPath); } while (0)
+
+#define WriteSettingInt(keyName) do { \
+	_snwprintf(buffer, _countof(buffer), L"%u", SettingManager::keyName); \
+	WritePrivateProfileStringW(L"NewVegasRTXLight", L#keyName, buffer, iniPath); \
+} while (0)
+#define WriteSettingBool(keyName) do { WritePrivateProfileBoolW(L"NewVegasRTXLight", L#keyName, SettingManager::keyName, iniPath); } while (0)
 
 void SettingManager::Initialize() {
 	Logger::Log("Starting the settings manager...");
@@ -36,10 +49,10 @@ void SettingManager::LoadSettings() {
 	}
 
 	Logger::Log("Reading settings from %ls", iniPath);
-	SettingManager::LightRangeMode = GetPrivateProfileIntW(L"NewVegasRTXLight", L"LightRangeMode", SettingManager::LightRangeMode, iniPath);
-	SettingManager::DisableCulling = GetPrivateProfileBoolW(L"NewVegasRTXLight", L"DisableCulling", SettingManager::DisableCulling, iniPath);
-	SettingManager::SunLight = GetPrivateProfileBoolW(L"NewVegasRTXLight", L"SunLight", SettingManager::SunLight, iniPath);
-	SettingManager::VisualSun = GetPrivateProfileBoolW(L"NewVegasRTXLight", L"VisualSun", SettingManager::VisualSun, iniPath);
+	GetSettingInt(LightRangeMode);
+	GetSettingBool(DisableCulling);
+	GetSettingBool(SunLight);
+	GetSettingBool(VisualSun);
 
 	// Validate settings
 	if (SettingManager::LightRangeMode < 0 || SettingManager::LightRangeMode > 2) {
@@ -57,12 +70,10 @@ void SettingManager::SaveSettings() {
 	}
 
 	Logger::Log("Saving settings to %ls", iniPath);
-	wchar_t buffer[32];
-	_snwprintf(buffer, _countof(buffer), L"%u", SettingManager::LightRangeMode);
-	WritePrivateProfileStringW(L"NewVegasRTXLight", L"LightRangeMode", buffer, iniPath);
-	WritePrivateProfileBoolW(L"NewVegasRTXLight", L"DisableCulling", SettingManager::DisableCulling, iniPath);
-	WritePrivateProfileBoolW(L"NewVegasRTXLight", L"SunLight", SettingManager::SunLight, iniPath);
-	WritePrivateProfileBoolW(L"NewVegasRTXLight", L"VisualSun", SettingManager::VisualSun, iniPath);
+	WriteSettingInt(LightRangeMode);
+	WriteSettingBool(DisableCulling);
+	WriteSettingBool(SunLight);
+	WriteSettingBool(VisualSun);
 }
 
 int SettingManager::LightRangeMode = 0;

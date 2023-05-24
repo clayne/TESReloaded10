@@ -78,7 +78,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
       <ModuleDefinitionFile>Exports.def</ModuleDefinitionFile>
-      <AdditionalDependencies>dxguid.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>dxguid.lib;version.lib;$(SolutionDir)lib\Release\libMinHook.x86.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -105,7 +105,7 @@
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
       <ModuleDefinitionFile>Exports.def</ModuleDefinitionFile>
-      <AdditionalDependencies>dxguid.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>dxguid.lib;version.lib;$(SolutionDir)lib\Release\libMinHook.x86.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -125,7 +125,6 @@
     <ClInclude Include="..\TESReloaded\Framework\Common\Base\PluginVersion.h" />
     <ClInclude Include="..\TESReloaded\Framework\Common\Base\SafeWrite.h" />
     <ClInclude Include="..\TESReloaded\Framework\Common\Base\Types.h" />
-    <ClInclude Include="..\TESReloaded\Framework\Common\Lib\Detours\detours.h" />
     <ClInclude Include="..\TESReloaded\Framework\NewVegas\Base.h" />
     <ClInclude Include="..\TESReloaded\Framework\NewVegas\Defines.h" />
     <ClInclude Include="..\TESReloaded\Framework\NewVegas\Framework.h" />
@@ -142,9 +141,6 @@
     <ClCompile Include="..\TESReloaded\Framework\Common\Base\Logger.cpp" />
     <ClCompile Include="..\TESReloaded\Framework\Common\Base\PluginVersion.cpp" />
     <ClCompile Include="..\TESReloaded\Framework\Common\Base\SafeWrite.cpp" />
-    <ClCompile Include="..\TESReloaded\Framework\Common\Lib\Detours\detours.cpp" />
-    <ClCompile Include="..\TESReloaded\Framework\Common\Lib\Detours\disasm.cpp" />
-    <ClCompile Include="..\TESReloaded\Framework\Common\Lib\Detours\modules.cpp" />
     <ClCompile Include="..\TESReloaded\Framework\NewVegas\Managers.cpp" />
     <ClCompile Include="..\TESReloaded\Framework\NewVegas\GameNi.cpp" />
     <ClCompile Include="Main.cpp" />

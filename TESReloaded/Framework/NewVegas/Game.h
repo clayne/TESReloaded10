@@ -1,5 +1,8 @@
 #pragma once
 
+#include <dinput.h>
+#include <dsound.h>
+
 class DetectorWindow;
 class INISettingCollection;
 class ModInfo;

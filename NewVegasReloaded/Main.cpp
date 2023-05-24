@@ -1,8 +1,6 @@
 #define WaitForDebugger 0
-#define HookDevice 0
 
 #include "Hooks/NewVegas/Hooks.h"
-#include "Device/Hook.h"
 
 
 extern "C" {
@@ -23,9 +21,6 @@ extern "C" {
 		while (!IsDebuggerPresent()) Sleep(10);
 	#endif
 #endif
-#if HookDevice
-		AttachDeviceHooks();
-#endif
 
 		Logger::Initialize("NewVegasRTXLight.log");
 		//CommandManager::Initialize(Interface);
@@ -37,9 +32,10 @@ extern "C" {
 			TheSettingManager->SaveSettings();
 
 			// Log settings
-			Logger::Log("Light mode:      %u", SettingManager::LightRangeMode);
-			Logger::Log("Disable culling: %s", SettingManager::DisableCulling ? "true" : "false");
-			Logger::Log("Inaccurate sun:  %s", SettingManager::SunLight ? "true" : "false");
+			Logger::Log("Light mode:       %u", SettingManager::LightRangeMode);
+			Logger::Log("Disable culling:  %s", SettingManager::DisableCulling ? "true" : "false");
+			Logger::Log("Enable sun light: %s", SettingManager::SunLight ? "true" : "false");
+			Logger::Log("Use visual sun:   %s", SettingManager::VisualSun ? "true" : "false");
 
 			AttachHooks();
 		}

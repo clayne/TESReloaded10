@@ -1,0 +1,3 @@
+[submodule "TESReloaded/lib/minhook"]
+	path = TESReloaded/lib/minhook
+	url = https://github.com/TsudaKageyu/minhook
