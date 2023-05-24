@@ -266,5 +266,10 @@ BSCullingProcess* __fastcall BSCullingProcessCreateHook(BSCullingProcess* apThis
 
 	ThisCall(0x4A0EB0, apThis, apVisibleSet);
 	apThis->kCullMode = 1; // ALLPASS 
+	Logger::Log("BSCullingProcessCreateHook");
 	return apThis;
+}
+
+void __fastcall BSCullingProcess_ProcessEx(BSCullingProcess* apThis, void*, NiAVObject* apObject) {
+	apObject->OnVisible(apThis);
 }

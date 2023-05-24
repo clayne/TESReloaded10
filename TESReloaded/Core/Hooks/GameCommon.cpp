@@ -3,8 +3,8 @@
 NiDX9Renderer* (__thiscall* InitializeRenderer)(NiDX9Renderer*) = (NiDX9Renderer* (__thiscall*)(NiDX9Renderer*))Hooks::InitializeRenderer;
 NiDX9Renderer* __fastcall InitializeRendererHook(NiDX9Renderer* This, UInt32 edx) {
 
-	TheRenderManager = (RenderManager*)(*InitializeRenderer)(This);
-	TheRenderManager->Initialize();
+	TheRenderManager = (RenderManagerBase*)(*InitializeRenderer)(This);
+	//TheRenderManager->Initialize();
 	//InitializeManagers();
 	//TheShaderManager->CreateEffects();
 	return TheRenderManager;

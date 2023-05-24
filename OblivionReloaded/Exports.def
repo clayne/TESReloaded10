@@ -1,4 +1,0 @@
-LIBRARY	"OblivionReloaded"
-EXPORTS
-OBSEPlugin_Query
-OBSEPlugin_Load
