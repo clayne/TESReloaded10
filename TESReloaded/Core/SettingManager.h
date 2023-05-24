@@ -15,4 +15,5 @@ public:
 	static int		LightRangeMode;
 	static bool		DisableCulling;
 	static bool		SunLight;
+	static bool		VisualSun;
 };

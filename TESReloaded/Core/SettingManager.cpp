@@ -4,6 +4,8 @@ static bool GetPrivateProfileBoolW(LPCWSTR lpAppName, LPCWSTR lpKeyName, BOOLEAN
 	return (CompareStringW(LOCALE_INVARIANT, NORM_IGNORECASE, boolStr, strlen, L"True", 4) == CSTR_EQUAL);
 }
 
+#define WritePrivateProfileBoolW(lpAppName, lpKeyName, bValue, lpFileName) WritePrivateProfileStringW((lpAppName), (lpKeyName), (bValue) ? L"True" : L"False", (lpFileName))
+
 void SettingManager::Initialize() {
 	Logger::Log("Starting the settings manager...");
 	TheSettingManager = new SettingManager();
@@ -35,12 +37,15 @@ void SettingManager::LoadSettings() {
 
 	Logger::Log("Reading settings from %ls", iniPath);
 	SettingManager::LightRangeMode = GetPrivateProfileIntW(L"NewVegasRTXLight", L"LightRangeMode", SettingManager::LightRangeMode, iniPath);
+	SettingManager::DisableCulling = GetPrivateProfileBoolW(L"NewVegasRTXLight", L"DisableCulling", SettingManager::DisableCulling, iniPath);
+	SettingManager::SunLight = GetPrivateProfileBoolW(L"NewVegasRTXLight", L"SunLight", SettingManager::SunLight, iniPath);
+	SettingManager::VisualSun = GetPrivateProfileBoolW(L"NewVegasRTXLight", L"VisualSun", SettingManager::VisualSun, iniPath);
+
+	// Validate settings
 	if (SettingManager::LightRangeMode < 0 || SettingManager::LightRangeMode > 2) {
 		Logger::Log("Invalid light mode %u, resetting to 1", SettingManager::LightRangeMode);
 		SettingManager::LightRangeMode = 1;
 	}
-	SettingManager::DisableCulling = GetPrivateProfileBoolW(L"NewVegasRTXLight", L"DisableCulling", SettingManager::DisableCulling, iniPath);
-	SettingManager::SunLight = GetPrivateProfileBoolW(L"NewVegasRTXLight", L"SunLight", SettingManager::SunLight, iniPath);
 }
 
 /*
@@ -55,10 +60,12 @@ void SettingManager::SaveSettings() {
 	wchar_t buffer[32];
 	_snwprintf(buffer, _countof(buffer), L"%u", SettingManager::LightRangeMode);
 	WritePrivateProfileStringW(L"NewVegasRTXLight", L"LightRangeMode", buffer, iniPath);
-	WritePrivateProfileStringW(L"NewVegasRTXLight", L"DisableCulling", SettingManager::DisableCulling ? L"True" : L"False", iniPath);
-	WritePrivateProfileStringW(L"NewVegasRTXLight", L"SunLight", SettingManager::SunLight ? L"True" : L"False", iniPath);
+	WritePrivateProfileBoolW(L"NewVegasRTXLight", L"DisableCulling", SettingManager::DisableCulling, iniPath);
+	WritePrivateProfileBoolW(L"NewVegasRTXLight", L"SunLight", SettingManager::SunLight, iniPath);
+	WritePrivateProfileBoolW(L"NewVegasRTXLight", L"VisualSun", SettingManager::VisualSun, iniPath);
 }
 
 int SettingManager::LightRangeMode = 0;
 bool SettingManager::DisableCulling = true;
 bool SettingManager::SunLight = true;
+bool SettingManager::VisualSun = true;
