@@ -17,7 +17,3 @@
 #include "Defines.h"
 #include "Base.h"
 #include "Managers.h"
-#include "../Core/Hooks/GameCommon.h"
-#include "../Core/Hooks/NewVegas/Culling.h"
-#include "../Core/Hooks/NewVegas/Game.h"
-#include "../Core/Hooks/NewVegas/Lights.h"

@@ -1,22 +1,45 @@
-#include "Hooks.h"
 #include "../lib/minhook/include/MinHook.h"
+#include "Hooks.h"
+#include "../GameCommon.h"
+#include "Culling.h"
+#include "Game.h"
+#include "Lights.h"
+#include "Render.h"
+
+bool MH_CreateHookSimple(LPVOID *ppOriginal, LPVOID pDetour) {
+	if (ppOriginal == nullptr) {
+		Logger::Log("Attempted to create null hook for %p", pDetour);
+	}
+	void* pTarget = *ppOriginal;
+	if (MH_CreateHook(pTarget, pDetour, ppOriginal) != MH_OK) {
+		Logger::Log("Failed to create hook for %p", pTarget);
+	}
+	else if (MH_EnableHook(pTarget)) {
+		Logger::Log("Failed to enable hook for %p", pTarget);
+	}
+	else {
+		Logger::Debug("Created hook for %p to %p", pTarget, pDetour);
+		return true;
+	}
+	return false;
+}
 
 void AttachHooks() {
-	if (MH_Initialize() == MH_OK) {
-		MH_CreateHook((void*)InitializeRenderer, &InitializeRendererHook, reinterpret_cast<LPVOID*>(&InitializeRenderer));
-		MH_CreateHook((void*)NewTES, &NewTESHook, reinterpret_cast<LPVOID*>(&NewTES));
-		MH_CreateHook((void*)NewMenuInterfaceManager, &NewMenuInterfaceManagerHook, reinterpret_cast<LPVOID*>(&NewMenuInterfaceManager));
-		if (MH_EnableHook(MH_ALL_HOOKS) != MH_OK) {
-			Logger::Log("Failed to apply hooks");
-		}
-	} else {
+	if (MH_Initialize() != MH_OK) {
 		Logger::Log("Failed to initialize MinHook");
+		return;
+	}
+	MH_CreateHookSimple((LPVOID*)&InitializeRenderer, InitializeRendererHook);
+	MH_CreateHookSimple((LPVOID*)&NewTES, NewTESHook);
+	MH_CreateHookSimple((LPVOID*)&NewMenuInterfaceManager, NewMenuInterfaceManagerHook);
+
+	AttachRenderHooks();
+
+	if (SettingManager::PassLights) {
+		AttachLightHooks();
 	}
 
-	AttachLightHooks();
-
-	if (SettingManager::DisableCulling)
-	{
+	if (SettingManager::DisableCulling) {
 		AttachCullingHooks();
 	}
 }

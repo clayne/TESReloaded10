@@ -49,6 +49,7 @@ void SettingManager::LoadSettings() {
 	}
 
 	Logger::Log("Reading settings from %ls", iniPath);
+	GetSettingBool(PassLights);
 	GetSettingInt(LightRangeMode);
 	GetSettingBool(DisableCulling);
 	GetSettingBool(SunLight);
@@ -70,12 +71,14 @@ void SettingManager::SaveSettings() {
 	}
 
 	Logger::Log("Saving settings to %ls", iniPath);
+	WriteSettingBool(PassLights);
 	WriteSettingInt(LightRangeMode);
 	WriteSettingBool(DisableCulling);
 	WriteSettingBool(SunLight);
 	WriteSettingBool(VisualSun);
 }
 
+bool SettingManager::PassLights = true;
 int SettingManager::LightRangeMode = 0;
 bool SettingManager::DisableCulling = true;
 bool SettingManager::SunLight = true;

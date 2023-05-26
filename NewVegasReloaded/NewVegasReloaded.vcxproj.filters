@@ -89,6 +89,9 @@
     <ClInclude Include="..\TESReloaded\Core\Hooks\NewVegas\Culling.h">
       <Filter>Core\Hooks\NewVegas</Filter>
     </ClInclude>
+    <ClInclude Include="..\TESReloaded\Core\Hooks\NewVegas\Render.h">
+      <Filter>Core\Hooks\NewVegas</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -128,6 +131,9 @@
       <Filter>Core\Hooks\NewVegas</Filter>
     </ClCompile>
     <ClCompile Include="..\TESReloaded\Core\Hooks\NewVegas\Culling.cpp">
+      <Filter>Core\Hooks\NewVegas</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TESReloaded\Core\Hooks\NewVegas\Render.cpp">
       <Filter>Core\Hooks\NewVegas</Filter>
     </ClCompile>
   </ItemGroup>

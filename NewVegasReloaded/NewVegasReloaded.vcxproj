@@ -120,6 +120,7 @@
     <ClInclude Include="..\TESReloaded\Core\Hooks\NewVegas\Hooks.h" />
     <ClCompile Include="..\TESReloaded\Core\Hooks\NewVegas\Lights.cpp" />
     <ClInclude Include="..\TESReloaded\Core\Hooks\NewVegas\Lights.h" />
+    <ClInclude Include="..\TESReloaded\Core\Hooks\NewVegas\Render.h" />
     <ClInclude Include="..\TESReloaded\Core\SettingManager.h" />
     <ClInclude Include="..\TESReloaded\Framework\Common\Base\Logger.h" />
     <ClInclude Include="..\TESReloaded\Framework\Common\Base\PluginVersion.h" />
@@ -137,6 +138,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\TESReloaded\Core\CommandManager.cpp" />
+    <ClCompile Include="..\TESReloaded\Core\Hooks\NewVegas\Render.cpp" />
     <ClCompile Include="..\TESReloaded\Core\SettingManager.cpp" />
     <ClCompile Include="..\TESReloaded\Framework\Common\Base\Logger.cpp" />
     <ClCompile Include="..\TESReloaded\Framework\Common\Base\PluginVersion.cpp" />

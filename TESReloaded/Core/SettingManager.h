@@ -12,6 +12,7 @@ public:
 	wchar_t					iniPath[MAX_PATH];
 
 	// Settings
+	static bool		PassLights;
 	static int		LightRangeMode;
 	static bool		DisableCulling;
 	static bool		SunLight;
