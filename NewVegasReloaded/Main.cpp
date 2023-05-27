@@ -37,6 +37,7 @@ extern "C" {
 			Logger::Log("Disable culling:  %s", SettingManager::DisableCulling ? "true" : "false");
 			Logger::Log("Enable sun light: %s", SettingManager::SunLight ? "true" : "false");
 			Logger::Log("Use visual sun:   %s", SettingManager::VisualSun ? "true" : "false");
+			Logger::Log("Skip render pass: %s", SettingManager::SkipRenderPass ? "true" : "false");
 
 			AttachHooks();
 		}

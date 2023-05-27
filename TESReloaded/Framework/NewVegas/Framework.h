@@ -14,6 +14,5 @@
 #include "GameNi.h"
 #include "GameHavok.h"
 #include "Game.h"
-#include "Defines.h"
 #include "Base.h"
 #include "Managers.h"

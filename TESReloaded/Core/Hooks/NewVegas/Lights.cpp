@@ -1,5 +1,3 @@
-#pragma once
-
 /*
 * Passes light information to RTX Remix
 */

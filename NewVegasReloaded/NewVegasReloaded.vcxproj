@@ -127,7 +127,6 @@
     <ClInclude Include="..\TESReloaded\Framework\Common\Base\SafeWrite.h" />
     <ClInclude Include="..\TESReloaded\Framework\Common\Base\Types.h" />
     <ClInclude Include="..\TESReloaded\Framework\NewVegas\Base.h" />
-    <ClInclude Include="..\TESReloaded\Framework\NewVegas\Defines.h" />
     <ClInclude Include="..\TESReloaded\Framework\NewVegas\Framework.h" />
     <ClInclude Include="..\TESReloaded\Framework\NewVegas\Game.h" />
     <ClInclude Include="..\TESReloaded\Framework\NewVegas\GameHavok.h" />

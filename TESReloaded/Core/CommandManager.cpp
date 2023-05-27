@@ -1,3 +1,5 @@
+#define CommandPrefix "NVRH"
+
 static bool CommandExecuter_GetVersion(CommandArgs Args) {
 
 	TheCommandManager->Commands.GetVersion(Args.result);

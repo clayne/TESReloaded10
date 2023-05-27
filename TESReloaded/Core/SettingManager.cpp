@@ -54,6 +54,7 @@ void SettingManager::LoadSettings() {
 	GetSettingBool(DisableCulling);
 	GetSettingBool(SunLight);
 	GetSettingBool(VisualSun);
+	GetSettingBool(SkipRenderPass);
 
 	// Validate settings
 	if (SettingManager::LightRangeMode < 0 || SettingManager::LightRangeMode > 2) {
@@ -76,6 +77,7 @@ void SettingManager::SaveSettings() {
 	WriteSettingBool(DisableCulling);
 	WriteSettingBool(SunLight);
 	WriteSettingBool(VisualSun);
+	WriteSettingBool(SkipRenderPass);
 }
 
 bool SettingManager::PassLights = true;
@@ -83,3 +85,4 @@ int SettingManager::LightRangeMode = 0;
 bool SettingManager::DisableCulling = true;
 bool SettingManager::SunLight = true;
 bool SettingManager::VisualSun = true;
+bool SettingManager::SkipRenderPass = true;

@@ -44,9 +44,6 @@
     <ClInclude Include="..\TESReloaded\Framework\NewVegas\Base.h">
       <Filter>Framework\NewVegas</Filter>
     </ClInclude>
-    <ClInclude Include="..\TESReloaded\Framework\NewVegas\Defines.h">
-      <Filter>Framework\NewVegas</Filter>
-    </ClInclude>
     <ClInclude Include="..\TESReloaded\Framework\NewVegas\Framework.h">
       <Filter>Framework\NewVegas</Filter>
     </ClInclude>

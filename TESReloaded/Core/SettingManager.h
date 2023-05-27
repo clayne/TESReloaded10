@@ -17,4 +17,5 @@ public:
 	static bool		DisableCulling;
 	static bool		SunLight;
 	static bool		VisualSun;
+	static bool		SkipRenderPass;
 };
