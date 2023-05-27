@@ -14,6 +14,7 @@ public:
 	// Settings
 	static bool		PassLights;
 	static int		LightRangeMode;
+	static float	LightIntensity;
 	static bool		DisableCulling;
 	static bool		SunLight;
 	static bool		VisualSun;

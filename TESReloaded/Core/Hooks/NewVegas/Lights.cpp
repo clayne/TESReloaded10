@@ -37,6 +37,7 @@ void FixedFunctionLighting() {
 	Device->LightEnable(0, SettingManager::SunLight);
 
 	// Fill in various point lights
+	float Strength = SettingManager::LightIntensity;
 	int i = 1; // Sun is at 0
 	while (Entry) {
 		NiPointLight* Light = Entry->data->sourceLight;
@@ -45,7 +46,7 @@ void FixedFunctionLighting() {
 		ZeroMemory(&DX9Light, sizeof(DX9Light));
 		DX9Light.Type = D3DLIGHT_POINT;
 		// TODO: Diffuse seems to be 0 to 1, Specular is not 0-1, not 0-255, maybe a radius?, Ambient is usually black
-		DX9Light.Diffuse = D3DXCOLOR(Light->Diff.r * Light->Dimmer, Light->Diff.g * Light->Dimmer, Light->Diff.b * Light->Dimmer, 1.0f);
+		DX9Light.Diffuse = D3DXCOLOR(Light->Diff.r * Light->Dimmer * Strength, Light->Diff.g * Light->Dimmer * Strength, Light->Diff.b * Light->Dimmer * Strength, 1.0f);
 		//DX9Light.Specular = D3DXCOLOR(Light->Spec.r, Light->Spec.g, Light->Spec.b, 1.0f);
 		DX9Light.Ambient = D3DXCOLOR(Light->Amb.r, Light->Amb.g, Light->Amb.b, 1.0f);
 		DX9Light.Position = D3DXVECTOR3(Light->m_worldTransform.pos.x - CameraPosition->x, Light->m_worldTransform.pos.y - CameraPosition->y, Light->m_worldTransform.pos.z - CameraPosition->z);

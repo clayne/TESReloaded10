@@ -34,6 +34,7 @@ extern "C" {
 			// Log settings
 			Logger::Log("Translate lights: %s", SettingManager::PassLights ? "true" : "false");
 			Logger::Log("Light mode:       %u", SettingManager::LightRangeMode);
+			Logger::Log("Light intensity:  %g", SettingManager::LightIntensity);
 			Logger::Log("Disable culling:  %s", SettingManager::DisableCulling ? "true" : "false");
 			Logger::Log("Enable sun light: %s", SettingManager::SunLight ? "true" : "false");
 			Logger::Log("Use visual sun:   %s", SettingManager::VisualSun ? "true" : "false");

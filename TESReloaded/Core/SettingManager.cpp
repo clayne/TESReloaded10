@@ -2,6 +2,20 @@
 
 static wchar_t buffer[32];
 
+static float GetPrivateProfileFloatW(LPCWSTR lpAppName, LPCWSTR lpKeyName, FLOAT fDefault, LPCWSTR lpFileName) {
+	_snwprintf(buffer, _countof(buffer), L"%g", fDefault);
+	DWORD strlen = GetPrivateProfileStringW(lpAppName, lpKeyName, buffer, buffer, _countof(buffer), lpFileName);
+	wchar_t* end;
+	float value = wcstof(buffer, &end);
+	while (end[0] != '\0') {
+		if (!iswspace(end[0])) {
+			return fDefault;
+		}
+		end++;
+	}
+	return value;
+}
+
 static bool GetPrivateProfileBoolW(LPCWSTR lpAppName, LPCWSTR lpKeyName, BOOLEAN bDefault, LPCWSTR lpFileName) {
 	wchar_t boolStr[6];
 	DWORD strlen = GetPrivateProfileStringW(lpAppName, lpKeyName, bDefault ? L"True" : L"False", boolStr, _countof(boolStr), lpFileName);
@@ -11,13 +25,20 @@ static bool GetPrivateProfileBoolW(LPCWSTR lpAppName, LPCWSTR lpKeyName, BOOLEAN
 #define WritePrivateProfileBoolW(lpAppName, lpKeyName, bValue, lpFileName) WritePrivateProfileStringW((lpAppName), (lpKeyName), (bValue) ? L"True" : L"False", (lpFileName))
 
 #define GetSettingInt(keyName) do { SettingManager::keyName = GetPrivateProfileIntW(L"NewVegasRTXLight", L#keyName, SettingManager::keyName, iniPath); } while (0)
+#define GetSettingFloat(keyName) do { SettingManager::keyName = GetPrivateProfileFloatW(L"NewVegasRTXLight", L#keyName, SettingManager::keyName, iniPath); } while (0)
 #define GetSettingBool(keyName) do { SettingManager::keyName = GetPrivateProfileBoolW(L"NewVegasRTXLight", L#keyName, SettingManager::keyName, iniPath); } while (0)
 
 #define WriteSettingInt(keyName) do { \
 	_snwprintf(buffer, _countof(buffer), L"%u", SettingManager::keyName); \
 	WritePrivateProfileStringW(L"NewVegasRTXLight", L#keyName, buffer, iniPath); \
 } while (0)
-#define WriteSettingBool(keyName) do { WritePrivateProfileBoolW(L"NewVegasRTXLight", L#keyName, SettingManager::keyName, iniPath); } while (0)
+#define WriteSettingFloat(keyName) do { \
+	_snwprintf(buffer, _countof(buffer), L"%g", SettingManager::keyName); \
+	WritePrivateProfileStringW(L"NewVegasRTXLight", L#keyName, buffer, iniPath); \
+} while (0)
+#define WriteSettingBool(keyName) do { \
+	WritePrivateProfileBoolW(L"NewVegasRTXLight", L#keyName, SettingManager::keyName, iniPath); \
+} while (0)
 
 void SettingManager::Initialize() {
 	Logger::Log("Starting the settings manager...");
@@ -51,6 +72,7 @@ void SettingManager::LoadSettings() {
 	Logger::Log("Reading settings from %ls", iniPath);
 	GetSettingBool(PassLights);
 	GetSettingInt(LightRangeMode);
+	GetSettingFloat(LightIntensity);
 	GetSettingBool(DisableCulling);
 	GetSettingBool(SunLight);
 	GetSettingBool(VisualSun);
@@ -74,6 +96,7 @@ void SettingManager::SaveSettings() {
 	Logger::Log("Saving settings to %ls", iniPath);
 	WriteSettingBool(PassLights);
 	WriteSettingInt(LightRangeMode);
+	WriteSettingFloat(LightIntensity);
 	WriteSettingBool(DisableCulling);
 	WriteSettingBool(SunLight);
 	WriteSettingBool(VisualSun);
@@ -82,6 +105,7 @@ void SettingManager::SaveSettings() {
 
 bool SettingManager::PassLights = true;
 int SettingManager::LightRangeMode = 0;
+float SettingManager::LightIntensity = 0.25f;
 bool SettingManager::DisableCulling = true;
 bool SettingManager::SunLight = true;
 bool SettingManager::VisualSun = true;
