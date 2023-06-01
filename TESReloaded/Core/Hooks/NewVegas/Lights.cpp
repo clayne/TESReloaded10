@@ -8,6 +8,7 @@ void FixedFunctionLighting() {
 	NiTList<ShadowSceneLight>::Entry* Entry = SceneNode->lights.start;
 	NiPoint3* CameraPosition = (NiPoint3*)0x011F8E9C;
 	//NiPoint3* CameraPosition = (NiPoint3*)0x011FA2A0;
+	float Strength = SettingManager::LightIntensity;
 
 	// Fill in sun light
 	if (SettingManager::SunLight) {
@@ -18,13 +19,14 @@ void FixedFunctionLighting() {
 		NiNode* SunRoot = WorldSky->sun->RootNode;
 		float SunriseStart = WorldSky->GetSunriseBegin();
 		float SunsetEnd = WorldSky->GetSunsetEnd();
+		bool night = GameHour > SunsetEnd || GameHour < SunriseStart;
+		float Intensity = night ? Strength * SettingManager::MoonIntensity : Strength;
 
 		D3DLIGHT9 DirLight;
 		ZeroMemory(&DirLight, sizeof(DirLight));
 		DirLight.Type = D3DLIGHT_DIRECTIONAL;
-		DirLight.Diffuse = D3DXCOLOR(sunLight->Diff.r, sunLight->Diff.g, sunLight->Diff.b, 1);
-		bool night = GameHour > SunsetEnd || GameHour < SunriseStart;
-		if (!SettingManager::VisualSun || GameHour > SunsetEnd || GameHour < SunriseStart) {
+		DirLight.Diffuse = D3DXCOLOR(sunLight->Diff.r * sunLight->Dimmer * Intensity, sunLight->Diff.g * sunLight->Dimmer * Intensity, sunLight->Diff.b * sunLight->Dimmer * Intensity, 1);
+		if (!SettingManager::VisualSun || night) {
 			// Night time, use lighting direction
 			DirLight.Direction = D3DXVECTOR3(Tes->directionalLight->direction.x, Tes->directionalLight->direction.y, Tes->directionalLight->direction.z);
 		}
@@ -37,7 +39,6 @@ void FixedFunctionLighting() {
 	Device->LightEnable(0, SettingManager::SunLight);
 
 	// Fill in various point lights
-	float Strength = SettingManager::LightIntensity;
 	int i = 1; // Sun is at 0
 	while (Entry) {
 		NiPointLight* Light = Entry->data->sourceLight;

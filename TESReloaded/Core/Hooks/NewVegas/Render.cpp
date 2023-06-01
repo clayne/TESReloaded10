@@ -12,7 +12,16 @@ void __fastcall RenderListHook(void* ecx, void* edx, void* triStrips, WORD rende
 		case BSSM_DIFFUSEPT2_S:
 		case BSSM_DIFFUSEPT2_SFg:
 		case BSSM_DIFFUSEPT3:
+		case BSSM_DIFFUSEPT3_S:
 		case BSSM_DIFFUSEPT3_SFg:
+		// Normals with bDoSpecularPass=1
+		case BSSM_2x_SPECULARDIR:
+		case BSSM_2x_SPECULARDIR_S:
+		case BSSM_2x_SPECULARPT:
+		case BSSM_2x_SPECULARPT_S:
+		case BSSM_2x_SPECULARPT2:
+		case BSSM_2x_SPECULARPT3:
+		case BSSM_2x_SPECULARPT3_S:
 		// Weird transparent black
 		case BSSM_TEXTURE_Vc:
 			return;

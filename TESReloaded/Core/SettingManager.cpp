@@ -17,9 +17,8 @@ static float GetPrivateProfileFloatW(LPCWSTR lpAppName, LPCWSTR lpKeyName, FLOAT
 }
 
 static bool GetPrivateProfileBoolW(LPCWSTR lpAppName, LPCWSTR lpKeyName, BOOLEAN bDefault, LPCWSTR lpFileName) {
-	wchar_t boolStr[6];
-	DWORD strlen = GetPrivateProfileStringW(lpAppName, lpKeyName, bDefault ? L"True" : L"False", boolStr, _countof(boolStr), lpFileName);
-	return (CompareStringW(LOCALE_INVARIANT, NORM_IGNORECASE, boolStr, strlen, L"True", 4) == CSTR_EQUAL);
+	DWORD strlen = GetPrivateProfileStringW(lpAppName, lpKeyName, bDefault ? L"True" : L"False", buffer, _countof(buffer), lpFileName);
+	return (CompareStringW(LOCALE_INVARIANT, NORM_IGNORECASE, buffer, strlen, L"True", 4) == CSTR_EQUAL);
 }
 
 #define WritePrivateProfileBoolW(lpAppName, lpKeyName, bValue, lpFileName) WritePrivateProfileStringW((lpAppName), (lpKeyName), (bValue) ? L"True" : L"False", (lpFileName))
@@ -73,6 +72,7 @@ void SettingManager::LoadSettings() {
 	GetSettingBool(PassLights);
 	GetSettingInt(LightRangeMode);
 	GetSettingFloat(LightIntensity);
+	GetSettingFloat(MoonIntensity);
 	GetSettingBool(DisableCulling);
 	GetSettingBool(SunLight);
 	GetSettingBool(VisualSun);
@@ -97,6 +97,7 @@ void SettingManager::SaveSettings() {
 	WriteSettingBool(PassLights);
 	WriteSettingInt(LightRangeMode);
 	WriteSettingFloat(LightIntensity);
+	WriteSettingFloat(MoonIntensity);
 	WriteSettingBool(DisableCulling);
 	WriteSettingBool(SunLight);
 	WriteSettingBool(VisualSun);
@@ -105,7 +106,8 @@ void SettingManager::SaveSettings() {
 
 bool SettingManager::PassLights = true;
 int SettingManager::LightRangeMode = 0;
-float SettingManager::LightIntensity = 0.25f;
+float SettingManager::LightIntensity = 1.0f;
+float SettingManager::MoonIntensity = 0.25f;
 bool SettingManager::DisableCulling = true;
 bool SettingManager::SunLight = true;
 bool SettingManager::VisualSun = true;

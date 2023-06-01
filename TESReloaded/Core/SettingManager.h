@@ -15,6 +15,7 @@ public:
 	static bool		PassLights;
 	static int		LightRangeMode;
 	static float	LightIntensity;
+	static float	MoonIntensity;
 	static bool		DisableCulling;
 	static bool		SunLight;
 	static bool		VisualSun;
